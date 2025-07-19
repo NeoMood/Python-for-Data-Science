@@ -41,29 +41,25 @@ def main():
        Main function to handle user input and error handling.
     """
     try:
-        if len(sys.argv) > 2:
-            print("AssertionError: more than one argument is provided")
-            sys.exit(1)
+        assert len(sys.argv) <= 2, "more than one argument is provided"
 
         if len(sys.argv) == 1:
             try:
-                text = input("What is the text that you want to count?\n")
+                print("What is the text that you want to count?")
+                text = sys.stdin.read()
             except (EOFError, KeyboardInterrupt):
-                print("\nAssertionError: no input provided")
-                sys.exit(1)
+                raise AssertionError("no input provided")
         else:
             text = sys.argv[1]
 
-        if not isinstance(text, str):
-            print("AssertionError: input must be a string")
-            sys.exit(1)
-
-        if not text:
-            print("AssertionError: empty text provided")
-            sys.exit(1)
+        assert isinstance(text, str), "input must be a string"
+        assert text, "empty text provided"
 
         analyze_text(text)
 
+    except AssertionError as e:
+        print(f"AssertionError: {e}")
+        sys.exit(1)
     except Exception:
         print("AssertionError: an unexpected error occurred")
         sys.exit(1)

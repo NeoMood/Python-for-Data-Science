@@ -1,5 +1,5 @@
 import sys
-import ft_filter
+from ft_filter import ft_filter
 
 
 def filterstring(string, n):
@@ -13,25 +13,25 @@ def filterstring(string, n):
     Returns:
         list: List of words longer than n characters
     """
-    try:
-        if not isinstance(string, str):
-            raise TypeError("First argument must be a string")
-        if not isinstance(n, int):
-            raise TypeError("Second argument must be an integer")
-        return list(ft_filter.ft_filter(lambda x: len(x) > n, string.split()))
-    except Exception:
-        print("AssertionError: the arguments are bad")
-        sys.exit(1)
+    assert isinstance(string, str), "the arguments are bad"
+    assert isinstance(n, int), "the arguments are bad"
+    return list(ft_filter(
+        lambda x: len(x) > n,
+        string.split()
+    ))
 
 
 def main():
     try:
-        if len(sys.argv) != 3 or not sys.argv[2].isdigit():
-            print("AssertionError: the arguments are bad")
-            sys.exit(1)
-        print(filterstring(sys.argv[1], int(sys.argv[2])))
-    except Exception:
-        print("AssertionError: the arguments are bad")
+        assert (
+            len(sys.argv) == 3 and sys.argv[2].isdigit()
+        ), "the arguments are bad"
+        print(filterstring(
+            sys.argv[1],
+            int(sys.argv[2])
+        ))
+    except AssertionError as e:
+        print(f"AssertionError: {e}")
         sys.exit(1)
 
 

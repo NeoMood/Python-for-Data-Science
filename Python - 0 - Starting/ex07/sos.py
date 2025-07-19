@@ -10,7 +10,7 @@ def string_to_morse(string):
         str or None: Morse code representation of the input string,
                     or None if invalid characters are present
     """
-    morse_code_dict = {
+    NESTED_MORSE = {
         'a': '.-', 'b': '-...', 'c': '-.-.', 'd': '-..', 'e': '.',
         'f': '..-.', 'g': '--.', 'h': '....', 'i': '..', 'j': '.---',
         'k': '-.-', 'l': '.-..', 'm': '--', 'n': '-.', 'o': '---',
@@ -22,23 +22,19 @@ def string_to_morse(string):
     }
 
     for char in string.lower():
-        if char not in morse_code_dict:
+        if char not in NESTED_MORSE:
             return None
-    return ' '.join(morse_code_dict[char] for char in string.lower())
+    return ' '.join(NESTED_MORSE[char] for char in string.lower())
 
 
 def main():
     try:
-        if len(sys.argv) != 2:
-            print("AssertionError: the arguments are bad")
-            sys.exit(1)
+        assert len(sys.argv) == 2, "the arguments are bad"
         result = string_to_morse(sys.argv[1])
-        if result is None:
-            print("AssertionError: the arguments are bad")
-            sys.exit(1)
+        assert result is not None, "the arguments are bad"
         print(result)
-    except Exception:
-        print("AssertionError: the arguments are bad")
+    except AssertionError as e:
+        print(f"AssertionError: {e}")
         sys.exit(1)
 
 

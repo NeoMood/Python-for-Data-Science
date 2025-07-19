@@ -1,6 +1,7 @@
 import time
 import os
 import sys
+from time import sleep
 
 
 def format_time(secs):
@@ -29,6 +30,7 @@ def ft_tqdm(lst: range) -> None:
         start_time = time.time()
         for i, elem in enumerate(lst, 1):
             try:
+                assert total > 0, "an error occurred"
                 percent = int(i / total * 100)
                 filled_length = int(bar_length * i // total)
                 bar = '█' * filled_length + '░' * (bar_length - filled_length)
@@ -44,24 +46,22 @@ def ft_tqdm(lst: range) -> None:
                     end='', flush=True
                 )
                 yield elem
-            except Exception:
-                print("AssertionError: an error occurred")
+            except AssertionError as e:
+                print(f"AssertionError: {e}")
                 sys.exit(1)
         print()
-    except Exception:
-        print("AssertionError: an error occurred")
+    except AssertionError as e:
+        print(f"AssertionError: {e}")
         sys.exit(1)
 
 
 def main():
     try:
-        if len(sys.argv) != 1:
-            print("AssertionError: the arguments are bad")
-            sys.exit(1)
+        assert len(sys.argv) == 1, "the arguments are bad"
         for _ in ft_tqdm(range(666)):
-            pass
-    except Exception:
-        print("AssertionError: the arguments are bad")
+            sleep(0.005)
+    except AssertionError as e:
+        print(f"AssertionError: {e}")
         sys.exit(1)
 
 
